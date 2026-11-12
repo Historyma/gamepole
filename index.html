@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="uk" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+
+    <title>Sudoku</title>
+
+    <!-- === ІКОНКИ / PWA === -->
+    <link rel="icon" type="image/svg+xml" href="icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+
+    <!-- iOS -->
+    <link rel="apple-touch-icon" href="apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Sudoku">
+
+    <!-- Android / Chrome -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#5b5bd6">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <main class="app">
+
+        <section id="screen-welcome" class="screen">
+            <div class="welcome-box">
+                <div class="welcome-icon">🧩</div>
+                <h2 data-i18n="welcome">Вітаємо в Sudoku</h2>
+                <p data-i18n="enter-name">Введіть ваше ім'я, щоб почати</p>
+                <input type="text" id="welcome-name" maxlength="20"
+                       data-i18n-placeholder="your-name" placeholder="Ваше ім'я">
+                <button id="welcome-continue" class="control-btn primary" data-i18n="continue">
+                    Продовжити
+                </button>
+            </div>
+        </section>
+
+        <section id="screen-menu" class="screen">
+            <header class="top-bar">
+                <div class="logo">
+                    <span class="logo-icon">🧩</span>
+                    <h1>Sudoku</h1>
+                </div>
+                <div class="score-card">
+                    <span class="score-label" data-i18n="score">Бали</span>
+                    <strong id="menu-score">0</strong>
+                    <span class="star">⭐</span>
+                </div>
+            </header>
+
+            <div class="player-card">
+                <div>
+                    <span class="player-label" data-i18n="player">Гравець</span>
+                    <strong id="menu-player-name">Гість</strong>
+                </div>
+                <button class="edit-player-btn" id="menu-edit-player"
+                        data-i18n-title="edit-player" title="Змінити ім'я">✏️</button>
+            </div>
+
+            <div class="menu-buttons">
+                <button id="btn-play" class="menu-btn primary">
+                    <span class="menu-btn-icon">🎮</span>
+                    <span data-i18n="play">Грати</span>
+                </button>
+
+                <button id="btn-settings" class="menu-btn secondary">
+                    <span class="menu-btn-icon">⚙️</span>
+                    <span data-i18n="settings">Налаштування</span>
+                </button>
+            </div>
+
+            <div class="achievements">
+                <h3 data-i18n="achievements">Досягнення</h3>
+                <table class="achievements-table">
+                    <thead>
+                        <tr>
+                            <th data-i18n="difficulty">Складність</th>
+                            <th data-i18n="best-time">Кращий час</th>
+                        </tr>
+                    </thead>
+                    <tbody id="achievements-body"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="screen-setup" class="screen">
+            <header class="top-bar">
+                <button class="back-btn" id="setup-back">←</button>
+                <h2 class="screen-title" data-i18n="choose-difficulty">Оберіть складність</h2>
+                <div class="spacer"></div>
+            </header>
+
+            <div class="difficulty-list">
+                <button class="difficulty-option" data-difficulty="easy">
+                    <span class="diff-icon">🌱</span>
+                    <span class="diff-info">
+                        <strong data-i18n="easy">Легко</strong>
+                        <small>4 × 4 ·
+                            <span data-i18n="best-time">Кращий час</span>:
+                            <span data-best-time="easy">--:--</span>
+                        </small>
+                    </span>
+                </button>
+
+                <button class="difficulty-option" data-difficulty="medium">
+                    <span class="diff-icon">⚡</span>
+                    <span class="diff-info">
+                        <strong data-i18n="medium">Середньо</strong>
+                        <small>6 × 6 ·
+                            <span data-i18n="best-time">Кращий час</span>:
+                            <span data-best-time="medium">--:--</span>
+                        </small>
+                    </span>
+                </button>
+
+                <button class="difficulty-option" data-difficulty="hard">
+                    <span class="diff-icon">🔥</span>
+                    <span class="diff-info">
+                        <strong data-i18n="hard">Складно</strong>
+                        <small>9 × 9 ·
+                            <span data-i18n="best-time">Кращий час</span>:
+                            <span data-best-time="hard">--:--</span>
+                        </small>
+                    </span>
+                </button>
+            </div>
+
+            <button id="btn-start" class="control-btn primary start-btn" disabled>
+                <span data-i18n="start-game">Почати гру</span>
+            </button>
+        </section>
+
+        <section id="screen-game" class="screen">
+            <header class="top-bar">
+                <button class="back-btn" id="game-back">←</button>
+                <div class="logo">
+                    <span class="logo-icon">🧩</span>
+                    <h1>Sudoku</h1>
+                </div>
+                <div class="score-card">
+                    <span class="score-label" data-i18n="score">Бали</span>
+                    <strong id="game-score">0</strong>
+                    <span class="star">⭐</span>
+                </div>
+            </header>
+
+            <section class="game-info">
+                <div class="info-card">
+                    <span class="info-label" data-i18n="difficulty">Складність</span>
+                    <strong id="game-difficulty">Легко</strong>
+                </div>
+                <div class="info-card">
+                    <span class="info-label" data-i18n="time">Час</span>
+                    <strong id="timer">00:00</strong>
+                </div>
+                <div class="info-card">
+                    <span class="info-label" data-i18n="record">Рекорд</span>
+                    <strong id="game-record">--:--</strong>
+                </div>
+            </section>
+
+            <section class="game-container">
+                <div id="sudoku-board" class="sudoku-board" aria-label="Sudoku board"></div>
+            </section>
+
+            <section class="number-panel">
+                <div id="number-buttons" class="number-buttons"></div>
+            </section>
+
+            <section class="game-controls">
+                <button id="new-game-btn" class="control-btn secondary">
+                    🔄 <span data-i18n="new-game">Нова гра</span>
+                </button>
+                <button id="check-btn" class="control-btn primary">
+                    ✓ <span data-i18n="check">Перевірити</span>
+                </button>
+            </section>
+
+            <div id="message" class="message" role="status"></div>
+        </section>
+
+        <section id="screen-settings" class="screen">
+            <header class="top-bar">
+                <button class="back-btn" id="settings-back">←</button>
+                <h2 class="screen-title" data-i18n="settings">Налаштування</h2>
+                <div class="spacer"></div>
+            </header>
+
+            <div class="settings-list">
+                <div class="settings-item">
+                    <label for="player-name-input" data-i18n="player-name">Ім'я гравця</label>
+                    <input type="text" id="player-name-input"
+                           class="settings-input" maxlength="20">
+                </div>
+
+                <div class="settings-item">
+                    <label data-i18n="language">Мова</label>
+                    <div class="toggle-group">
+                        <button class="toggle-btn" data-lang="uk">🇺🇦 Українська</button>
+                        <button class="toggle-btn" data-lang="en">🇬🇧 English</button>
+                    </div>
+                </div>
+
+                <div class="settings-item">
+                    <label data-i18n="theme">Тема</label>
+                    <div class="toggle-group">
+                        <button class="toggle-btn" data-theme-btn="light">
+                            ☀️ <span data-i18n="light">Світла</span>
+                        </button>
+                        <button class="toggle-btn" data-theme-btn="dark">
+                            🌙 <span data-i18n="dark">Темна</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="win-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="win-icon">🏆</div>
+            <h2 data-i18n="congrats">Вітаємо!</h2>
+            <p id="win-text">…</p>
+            <div class="points-earned">+<span id="earned-points">1</span> ⭐</div>
+            <div id="record-badge" class="record-badge hidden" data-i18n="new-record">
+                Новий рекорд!
+            </div>
+            <button id="modal-close-btn" class="control-btn primary" data-i18n="back-to-menu">
+                Повернутися в меню
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

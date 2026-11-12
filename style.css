@@ -1,0 +1,755 @@
+/* =========================
+   БАЗОВІ НАЛАШТУВАННЯ
+========================= */
+
+:root {
+    --bg: #f4f7fb;
+    --surface: #ffffff;
+    --primary: #5b5bd6;
+    --primary-dark: #4545b8;
+    --primary-light: #7b6ee8;
+    --secondary: #eef0ff;
+    --text: #20243a;
+    --muted: #7b809a;
+    --border: #dfe3f0;
+    --error: #e85d75;
+    --success: #35a86b;
+    --shadow: 0 12px 35px rgba(44, 52, 100, 0.12);
+    --shadow-soft: 0 6px 20px rgba(44, 52, 100, 0.08);
+    --shadow-glow: rgba(91, 91, 214, 0.25);
+    --selected: #dfe2ff;
+    --same-number: #f0f1ff;
+    --error-bg: #fff0f3;
+    --correct-bg: #effcf5;
+    --modal-overlay: rgba(25, 28, 55, 0.55);
+    --gradient-bg: radial-gradient(circle at top left, #e3e6ff 0%, transparent 35%);
+}
+
+[data-theme="dark"] {
+    --bg: #131528;
+    --surface: #1e2035;
+    --primary: #8b8bff;
+    --primary-dark: #6a6ad4;
+    --primary-light: #a5a5ff;
+    --secondary: #2a2d4a;
+    --text: #e8eaf6;
+    --muted: #8c91b0;
+    --border: #343858;
+    --error: #ff7d92;
+    --success: #4dd48e;
+    --shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+    --shadow-soft: 0 6px 20px rgba(0, 0, 0, 0.25);
+    --shadow-glow: rgba(139, 139, 255, 0.3);
+    --selected: #3a3d5a;
+    --same-number: #2a2d45;
+    --error-bg: #3d2029;
+    --correct-bg: #1d3a2a;
+    --modal-overlay: rgba(0, 0, 0, 0.7);
+    --gradient-bg: radial-gradient(circle at top left, #232645 0%, transparent 35%);
+}
+
+* {
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.hidden { display: none !important; }
+
+html { min-height: 100%; }
+
+body {
+    margin: 0;
+    min-width: 320px;
+    min-height: 100vh;
+    font-family: Inter, Arial, sans-serif;
+    color: var(--text);
+    background: var(--gradient-bg), var(--bg);
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+/* =========================
+   ЕКРАНИ
+========================= */
+
+.app {
+    width: min(100%, 680px);
+    min-height: 100vh;
+    margin: 0 auto;
+    padding: 20px 14px 32px;
+}
+
+.screen {
+    display: none;
+    animation: fadeIn 0.25s ease-out;
+}
+
+.screen.active { display: block; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   ВЕРХНЯ ПАНЕЛЬ / ЛОГО
+========================= */
+
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.logo-icon { font-size: 30px; }
+
+.logo h1 {
+    margin: 0;
+    font-size: clamp(24px, 6vw, 32px);
+    letter-spacing: -1px;
+}
+
+.screen-title {
+    flex: 1;
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.spacer {
+    width: 42px;
+    height: 42px;
+    flex-shrink: 0;
+}
+
+.score-card {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-soft);
+}
+
+.score-label {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.score-card strong { font-size: 20px; }
+
+.back-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+    flex-shrink: 0;
+}
+
+.back-btn:active { transform: scale(0.94); }
+
+/* =========================
+   ЕКРАН ВІТАННЯ
+========================= */
+
+.welcome-box {
+    display: grid;
+    gap: 16px;
+    max-width: 400px;
+    margin: 40px auto 0;
+    padding: 32px 24px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    box-shadow: var(--shadow);
+}
+
+.welcome-icon { font-size: 64px; line-height: 1; }
+
+.welcome-box h2 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.welcome-box p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+}
+
+.welcome-box input {
+    padding: 14px 16px;
+    font: inherit;
+    font-size: 16px;
+    text-align: center;
+    color: var(--text);
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.welcome-box input:focus { border-color: var(--primary); }
+
+/* =========================
+   КАРТКА ГРАВЦЯ
+========================= */
+
+.player-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.player-card .player-label {
+    display: block;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 2px;
+}
+
+.player-card strong { font-size: 18px; }
+
+.edit-player-btn {
+    padding: 8px;
+    font-size: 18px;
+    background: var(--secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.edit-player-btn:active { transform: scale(0.94); }
+
+/* =========================
+   КНОПКИ МЕНЮ
+========================= */
+
+.menu-buttons {
+    display: grid;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.menu-btn {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-height: 78px;
+    padding: 18px 22px;
+    font: inherit;
+    font-size: 20px;
+    font-weight: 700;
+    text-align: left;
+    border-radius: 18px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.menu-btn .menu-btn-icon { font-size: 30px; }
+
+.menu-btn.primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 10px 25px var(--shadow-glow);
+    border: none;
+}
+
+.menu-btn.secondary {
+    color: var(--primary);
+    background: var(--secondary);
+    border: 1px solid var(--border);
+}
+
+.menu-btn:active { transform: scale(0.98); }
+
+/* =========================
+   ТАБЛИЦЯ ДОСЯГНЕНЬ
+========================= */
+
+.achievements {
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.achievements h3 {
+    margin: 0 0 12px;
+    font-size: 14px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.achievements-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.achievements-table th,
+.achievements-table td {
+    padding: 10px 6px;
+    font-size: 14px;
+    text-align: left;
+}
+
+.achievements-table th {
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 12px;
+}
+
+.achievements-table td {
+    border-top: 1px solid var(--border);
+    font-weight: 600;
+}
+
+.achievements-table td:last-child {
+    text-align: right;
+    color: var(--primary);
+}
+
+/* =========================
+   ЕКРАН ВИБОРУ СКЛАДНОСТІ
+========================= */
+
+.difficulty-list {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.difficulty-option {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 18px;
+    font: inherit;
+    text-align: left;
+    color: var(--text);
+    background: var(--surface);
+    border: 2px solid var(--border);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.difficulty-option .diff-icon { font-size: 32px; }
+
+.difficulty-option .diff-info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+}
+
+.difficulty-option .diff-info strong { font-size: 18px; }
+
+.difficulty-option .diff-info small {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.difficulty-option.active {
+    border-color: var(--primary);
+    background: var(--secondary);
+}
+
+.difficulty-option:active { transform: scale(0.98); }
+
+.start-btn {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.start-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    box-shadow: none;
+    filter: grayscale(0.6);
+}
+
+/* =========================
+   ІНФОРМАЦІЯ ПРО ГРУ
+========================= */
+
+.game-info {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.info-card {
+    min-width: 0;
+    padding: 12px 8px;
+    text-align: center;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.info-label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 11px;
+    color: var(--muted);
+}
+
+.info-card strong {
+    display: block;
+    overflow: hidden;
+    font-size: clamp(14px, 4vw, 18px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* =========================
+   ІГРОВЕ ПОЛЕ
+========================= */
+
+.game-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.sudoku-board {
+    display: grid;
+    width: min(100%, 560px);
+    aspect-ratio: 1;
+    overflow: hidden;
+    background: var(--surface);
+    border: 3px solid var(--text);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+}
+
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    font-family: inherit;
+    font-size: clamp(16px, 6vw, 28px);
+    font-weight: 600;
+    color: var(--text);
+    background: var(--surface);
+    border: none;
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.cell:active { transform: scale(0.96); }
+
+.cell.fixed {
+    font-weight: 800;
+    color: var(--text);
+    cursor: default;
+}
+
+.cell.user-value { color: var(--primary); }
+.cell.selected { background: var(--selected); box-shadow: inset 0 0 0 2px var(--primary); }
+.cell.error { color: var(--error); background: var(--error-bg); }
+.cell.correct { background: var(--correct-bg); }
+.cell.same-number { background: var(--same-number); }
+
+/* Товсті лінії блоків */
+
+.sudoku-board.size-4 .cell:nth-child(2n) { border-right: 2px solid var(--text); }
+.sudoku-board.size-4 .cell:nth-child(4n) { border-right: none; }
+.sudoku-board.size-4 .cell:nth-child(n + 9):nth-child(-n + 12) { border-top: 2px solid var(--text); }
+
+.sudoku-board.size-6 .cell:nth-child(3n) { border-right: 2px solid var(--text); }
+.sudoku-board.size-6 .cell:nth-child(6n) { border-right: none; }
+.sudoku-board.size-6 .cell:nth-child(n + 13):nth-child(-n + 18),
+.sudoku-board.size-6 .cell:nth-child(n + 25):nth-child(-n + 30) { border-top: 2px solid var(--text); }
+
+.sudoku-board.size-9 .cell:nth-child(3n) { border-right: 2px solid var(--text); }
+.sudoku-board.size-9 .cell:nth-child(9n) { border-right: none; }
+.sudoku-board.size-9 .cell:nth-child(n + 28):nth-child(-n + 36),
+.sudoku-board.size-9 .cell:nth-child(n + 55):nth-child(-n + 63) { border-top: 2px solid var(--text); }
+
+/* =========================
+   КНОПКИ З ЦИФРАМИ
+========================= */
+
+.number-panel { margin: 18px 0; }
+
+.number-buttons {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(42px, 1fr));
+    gap: 8px;
+    width: min(100%, 560px);
+    margin: 0 auto;
+}
+
+.number-btn {
+    min-height: 48px;
+    font: inherit;
+    font-size: clamp(17px, 5vw, 22px);
+    font-weight: 700;
+    color: var(--primary);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-soft);
+    cursor: pointer;
+}
+
+.number-btn:active { transform: scale(0.94); }
+.erase-btn { color: var(--error); }
+
+/* =========================
+   КНОПКИ КЕРУВАННЯ
+========================= */
+
+.game-controls {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.control-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    min-height: 52px;
+    padding: 10px 14px;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.control-btn:active { transform: scale(0.97); }
+
+.primary {
+    color: #fff;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    box-shadow: 0 8px 20px var(--shadow-glow);
+}
+
+.secondary {
+    color: var(--primary);
+    background: var(--secondary);
+    border: 1px solid var(--border);
+}
+
+/* =========================
+   ПОВІДОМЛЕННЯ
+========================= */
+
+.message {
+    min-height: 24px;
+    margin-top: 14px;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.message.success { color: var(--success); }
+.message.error   { color: var(--error); }
+
+/* =========================
+   НАЛАШТУВАННЯ
+========================= */
+
+.settings-list {
+    display: grid;
+    gap: 16px;
+}
+
+.settings-item {
+    display: grid;
+    gap: 10px;
+    padding: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+}
+
+.settings-item label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.settings-input {
+    padding: 12px 14px;
+    font: inherit;
+    font-size: 16px;
+    color: var(--text);
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.settings-input:focus { border-color: var(--primary); }
+
+.toggle-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.toggle-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px 10px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text);
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+
+.toggle-btn:active { transform: scale(0.96); }
+
+.toggle-btn.active {
+    color: var(--primary);
+    background: var(--secondary);
+    border-color: var(--primary);
+}
+
+/* =========================
+   МОДАЛЬНЕ ВІКНО ПЕРЕМОГИ
+========================= */
+
+.modal {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: var(--modal-overlay);
+    backdrop-filter: blur(6px);
+}
+
+.modal-content {
+    width: min(100%, 380px);
+    padding: 32px 24px;
+    text-align: center;
+    background: var(--surface);
+    border-radius: 24px;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.25);
+    animation: modalAppear 0.25s ease-out;
+}
+
+@keyframes modalAppear {
+    from { opacity: 0; transform: scale(0.9) translateY(15px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.win-icon { margin-bottom: 12px; font-size: 58px; line-height: 1; }
+.modal-content h2 { margin: 0 0 8px; font-size: 28px; }
+.modal-content p  { margin: 0 0 20px; color: var(--muted); }
+
+.points-earned {
+    display: inline-block;
+    margin-bottom: 14px;
+    padding: 10px 18px;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary);
+    background: var(--secondary);
+    border-radius: 14px;
+}
+
+.record-badge {
+    display: block;
+    width: fit-content;
+    margin: 0 auto 18px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--success);
+    background: var(--correct-bg);
+    border-radius: 10px;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.06); }
+}
+
+/* =========================
+   АДАПТАЦІЯ
+========================= */
+
+@media (max-width: 380px) {
+    .app { padding-right: 10px; padding-left: 10px; }
+    .top-bar { margin-bottom: 14px; }
+    .score-card { padding: 8px 10px; }
+    .score-label { display: none; }
+    .game-info { gap: 6px; }
+    .info-card { padding: 9px 4px; }
+    .cell { font-size: clamp(14px, 5.5vw, 24px); }
+    .number-buttons { gap: 6px; }
+    .number-btn { min-height: 44px; }
+    .menu-btn { min-height: 68px; font-size: 18px; }
+}
+
+@media (min-width: 700px) {
+    .app { padding-top: 32px; }
+
+    .number-btn:hover { transform: translateY(-2px); }
+
+    .control-btn:hover { filter: brightness(1.04); transform: translateY(-1px); }
+
+    .menu-btn:hover { transform: translateY(-2px); }
+    .difficulty-option:hover { border-color: var(--primary); }
+    .back-btn:hover,
+    .toggle-btn:hover,
+    .edit-player-btn:hover { filter: brightness(1.05); }
+}
